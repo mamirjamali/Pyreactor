@@ -43,7 +43,3 @@ class Tensor():
 
         index = self._index(indices)
         return self.storage[index]
-
-t = Tensor([1, 2, 3, 4, 5, 6], (3, 2))
-
-print(t[2].offset)
