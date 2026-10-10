@@ -8,11 +8,11 @@ class Tensor():
 
 
         if strides is None:
-            self.strides = self._compute_contigoues_strides(self.shape)
+            self.strides = self._compute_contiguous_strides(self.shape)
         else:
             self.strides = tuple(strides)
 
-    def _compute_contigoues_strides(self, shape):
+    def _compute_contiguous_strides(self, shape):
         strides = [0] * len(shape)
 
         stride = 1
