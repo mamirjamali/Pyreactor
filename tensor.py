@@ -35,7 +35,7 @@ class Tensor():
         col = self.shape[-1]
         offset = self._index((row, 0))
 
-        return Tensor(self.storage, (col,), (1,), offset)
+        return Tensor(self.storage, (col,), (self.strides[-1],), offset)
         
     def __getitem__(self, indices):
         if isinstance(indices, int):
