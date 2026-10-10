@@ -36,7 +36,6 @@ class Tensor():
     def _index(self, indices):
         """Translate a coordinate tuple to a storage element index."""
         index = self.offset
-        
         for i in range(0 , len(indices), 1):
             index += self.strides[i] * indices[i]
 
@@ -47,6 +46,7 @@ class Tensor():
         col = self.shape[-1]
         offset = self._index((row, 0))
 
+        """Creating sub-tensor"""
         return Tensor(
             self.storage,
             (col,),
@@ -56,7 +56,19 @@ class Tensor():
     def __getitem__(self, indices):
         """Return a row view for an integer index or an element for a tuple."""
         if isinstance(indices, int):
+            if len(self.shape) == 1:
+                index = self._index((indices,))
+                return self.storage[index]
+
             return self._sub(indices)
 
         index = self._index(indices)
         return self.storage[index]
+
+    def __setitem__(self, indices, value):
+        if isinstance(indices, int):
+            indices = (indices,)
+
+        index = self._index(indices)
+        """Setting value at index"""
+        self.storage[index] = value

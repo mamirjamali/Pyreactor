@@ -23,3 +23,12 @@ def test_integer_index_returns_strided_row_view():
     assert row[0] == 3
     assert row[1] == 6
     assert row.storage is t.storage
+
+def test_integer_index_set_storage():
+    t = Tensor([1, 2, 3, 4, 5, 6], (3, 2), strides=(2, 1))
+    row = t[2]
+    row[0] = 100
+
+    assert t[2,0] == row[0] == 100
+    assert t.storage[4] == row.storage[4] == 100
+    assert t.storage is row.storage
