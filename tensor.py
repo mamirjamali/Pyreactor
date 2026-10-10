@@ -33,7 +33,7 @@ class Tensor():
     
     def _sub(self, row):
         col = self.shape[-1]
-        offset = self._index((2, 0))
+        offset = self._index((row, 0))
 
         return Tensor(self.storage, (col,), (1,), offset)
         
