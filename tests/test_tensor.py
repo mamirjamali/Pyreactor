@@ -32,3 +32,26 @@ def test_integer_index_set_storage():
     assert t[2,0] == row[0] == 100
     assert t.storage[4] == row.storage[4] == 100
     assert t.storage is row.storage
+
+def test_transposed_2d_array():
+    t = Tensor([1, 2, 3, 4, 5, 6], (2, 3))
+    transposed = t.transpose()
+
+    assert transposed.shape == (3, 2)
+    assert transposed.strides == (1, 3)
+    assert transposed.offset == t.offset
+    assert transposed.storage is t.storage
+
+    assert transposed[0, 1] == 4
+    assert transposed[2, 1] == 6
+
+    transposed[0, 1] = 99
+    assert t[1, 0] == 99
+
+def test_contiguous_transition():
+    t = Tensor([1, 2, 3, 4, 5, 6], (2, 3))
+    transposed = t.transpose()
+    contiguous_t = transposed.contiguous()
+
+    assert contiguous_t.storage != t.storage
+    assert contiguous_t.storage[1] == t.storage[3]
